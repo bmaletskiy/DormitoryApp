@@ -15,7 +15,7 @@ namespace DormitoryApp
         public MainPage()
         {
             InitializeComponent();
-
+            exitButton.Clicked += ExitButton_Clicked;
             loadXmlButton.Clicked += LoadXmlButton_Clicked;
             searchButton.Clicked += SearchButton_Clicked;
             clearButton.Clicked += ClearButton_Clicked;
@@ -153,7 +153,7 @@ namespace DormitoryApp
             }
         }
 
-       private async void OnExitClicked(object sender, EventArgs e)
+       private async void ExitButton_Clicked(object sender, EventArgs e)
     {
         bool answer = await DisplayAlert("Вихід", "Ви дійсно хочете вийти з програми?", "Так", "Ні");
         if (answer)

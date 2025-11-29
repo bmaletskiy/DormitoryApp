@@ -79,6 +79,11 @@
                     Text="Перетворити XML у HTML"
                     BackgroundColor="#2196F3"
                     TextColor="White"/>
+
+             <Button x:Name="exitButton"
+                    Text="Вихід"
+                    BackgroundColor="#F44336"
+                    TextColor="White"/>
                     
             <!-- Results -->
             <Label Text="Результати:"
