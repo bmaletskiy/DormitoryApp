@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Xml;
 using DormitoryApp.Models;
 
@@ -7,16 +5,22 @@ namespace DormitoryApp.Strategy
 {
     public class SaxSearchStrategy : IXmlSearchStrategy
     {
-        public List<StudentInfo> Search(string filePath, string query)
+        public List<StudentInfo> Search(
+            string filePath,
+            string nameQuery,
+            string facultyQuery,
+            string departmentQuery,
+            string courseQuery)
         {
             var results = new List<StudentInfo>();
 
             using (XmlReader reader = XmlReader.Create(filePath))
             {
-                StudentInfo student = null;
+                StudentInfo? student = null;
 
                 while (reader.Read())
                 {
+                    // Початок вузла Student
                     if (reader.NodeType == XmlNodeType.Element && reader.Name == "Student")
                     {
                         student = new StudentInfo
@@ -27,33 +31,56 @@ namespace DormitoryApp.Strategy
                             Bed = reader.GetAttribute("bed") ?? ""
                         };
                     }
-                    else if (reader.NodeType == XmlNodeType.Element)
-                    {
-                        if (student == null) continue;
 
+                    // Дочірні елементи
+                    else if (reader.NodeType == XmlNodeType.Element && student != null)
+                    {
                         switch (reader.Name)
                         {
                             case "Name":
                                 student.Name = reader.ReadElementContentAsString();
                                 break;
+
                             case "Course":
                                 student.Course = reader.ReadElementContentAsString();
                                 break;
+
                             case "StartDate":
                                 student.StartDate = reader.ReadElementContentAsString();
                                 break;
+
                             case "EndDate":
                                 student.EndDate = reader.ReadElementContentAsString();
                                 break;
                         }
                     }
-                    else if (reader.NodeType == XmlNodeType.EndElement && reader.Name == "Student")
+
+                    // Кінець Student — перевірка фільтрів
+                    else if (reader.NodeType == XmlNodeType.EndElement &&
+                             reader.Name == "Student" &&
+                             student != null)
                     {
-                        if (student != null && (string.IsNullOrEmpty(query) || student.Name.Contains(query, StringComparison.OrdinalIgnoreCase)))
-                        {
+                        bool matches =
+                            (string.IsNullOrWhiteSpace(nameQuery) ||
+                             (student.Name != null &&
+                              student.Name.Contains(nameQuery, StringComparison.OrdinalIgnoreCase))) &&
+
+                            (string.IsNullOrWhiteSpace(facultyQuery) ||
+                             (student.Faculty != null &&
+                              student.Faculty.Contains(facultyQuery, StringComparison.OrdinalIgnoreCase))) &&
+
+                            (string.IsNullOrWhiteSpace(departmentQuery) ||
+                             (student.Department != null &&
+                              student.Department.Contains(departmentQuery, StringComparison.OrdinalIgnoreCase))) &&
+
+                            (string.IsNullOrWhiteSpace(courseQuery) ||
+                             (student.Course != null &&
+                              student.Course.Equals(courseQuery, StringComparison.OrdinalIgnoreCase)));
+
+                        if (matches)
                             results.Add(student);
-                            student = null;
-                        }
+
+                        student = null;
                     }
                 }
             }

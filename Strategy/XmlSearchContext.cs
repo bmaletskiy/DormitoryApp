@@ -1,28 +1,35 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DormitoryApp.Models; 
+using DormitoryApp.Models;
 
 namespace DormitoryApp.Strategy
 {
     public class XmlSearchContext
     {
-        private IXmlSearchStrategy _strategy;
+        private IXmlSearchStrategy strategy;
 
         public XmlSearchContext(IXmlSearchStrategy strategy)
         {
-            _strategy = strategy;
+            this.strategy = strategy;
         }
 
-        public void SetStrategy(IXmlSearchStrategy strategy)
+        public void SetStrategy(IXmlSearchStrategy newStrategy)
         {
-            _strategy = strategy;
+            strategy = newStrategy;
         }
 
-        public List<StudentInfo> Search(string filePath, string query)
+        public List<StudentInfo> ExecuteSearch(
+            string filePath,
+            string nameQuery,
+            string facultyQuery,
+            string departmentQuery,
+            string courseQuery)
         {
-            return _strategy.Search(filePath, query); 
+            return strategy.Search(
+                filePath,
+                nameQuery,
+                facultyQuery,
+                departmentQuery,
+                courseQuery
+            );
         }
     }
 }

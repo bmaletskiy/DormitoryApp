@@ -16,13 +16,11 @@ namespace DormitoryApp
         {
             InitializeComponent();
 
-            // Підписка на події кнопок
             loadXmlButton.Clicked += LoadXmlButton_Clicked;
             searchButton.Clicked += SearchButton_Clicked;
             clearButton.Clicked += ClearButton_Clicked;
             transformButton.Clicked += TransformButton_Clicked;
 
-            // Підписка на зміну Picker для стратегії
             strategyPicker.SelectedIndexChanged += StrategyPicker_SelectedIndexChanged;
         }
 
@@ -47,17 +45,18 @@ namespace DormitoryApp
         private async void LoadXmlButton_Clicked(object sender, EventArgs e)
         {
             var result = await FilePicker.Default.PickAsync();
+
             if (result != null && result.FileName.EndsWith(".xml", StringComparison.OrdinalIgnoreCase))
             {
                 selectedXmlFile = result.FullPath;
                 xmlFileLabel.Text = result.FileName;
 
-                // Завантажуємо факультети для Picker
+                // Завантаження факультетів
                 var faculties = GetAttributesFromXml(selectedXmlFile, "faculty");
                 facultyPicker.ItemsSource = faculties;
 
                 if (faculties.Count > 0)
-                    facultyPicker.SelectedIndex = 0; // Вибрати перший елемент автоматично
+                    facultyPicker.SelectedIndex = 0;
             }
             else
             {
@@ -65,7 +64,6 @@ namespace DormitoryApp
             }
         }
 
-        // Метод для отримання унікальних значень атрибутів (наприклад, faculty)
         private List<string> GetAttributesFromXml(string xmlFile, string attributeName)
         {
             var list = new List<string>();
@@ -93,32 +91,30 @@ namespace DormitoryApp
                 return;
             }
 
-            string query = keywordEntry.Text ?? string.Empty;
-            string selectedFaculty = facultyPicker.SelectedItem?.ToString();
+            string name = keywordEntry.Text ?? "";
+            string faculty = facultyPicker.SelectedItem?.ToString() ?? "";
+            string department = departmentEntry.Text ?? "";
+            string course = courseEntry.Text ?? "";
 
-            // Виконуємо пошук через стратегію
-            var results = currentStrategy.Search(selectedXmlFile, query);
+            var results = currentStrategy.Search(
+                selectedXmlFile,
+                name,
+                faculty,
+                department,
+                course
+            );
 
-            // Фільтруємо за ПІБ
-            if (!string.IsNullOrEmpty(query))
-            {
-                results = results.FindAll(s => s.Name.Contains(query, StringComparison.OrdinalIgnoreCase));
-            }
-
-            // Фільтруємо за факультетом
-            if (!string.IsNullOrEmpty(selectedFaculty))
-            {
-                results = results.FindAll(s => s.Faculty.Equals(selectedFaculty, StringComparison.OrdinalIgnoreCase));
-            }
-
-            // Передаємо результат у CollectionView
             resultsCollectionView.ItemsSource = results;
         }
 
+
         private void ClearButton_Clicked(object sender, EventArgs e)
         {
-            keywordEntry.Text = string.Empty;
+            keywordEntry.Text = "";
+            departmentEntry.Text = "";
+            courseEntry.Text = "";
             facultyPicker.SelectedIndex = -1;
+
             resultsCollectionView.ItemsSource = null;
         }
 
@@ -132,8 +128,7 @@ namespace DormitoryApp
 
             try
             {
-                // Відкриваємо FilePicker для обрання XSL
-                var xslResult = await FilePicker.Default.PickAsync(); // просто відкриває провідник
+                var xslResult = await FilePicker.Default.PickAsync();
 
                 if (xslResult == null)
                 {
@@ -142,9 +137,10 @@ namespace DormitoryApp
                 }
 
                 string xslFilePath = xslResult.FullPath;
-
-                // HTML файл у тій же директорії, що й XML
-                string htmlOutputPath = Path.Combine(Path.GetDirectoryName(selectedXmlFile), "output.html");
+                string htmlOutputPath = Path.Combine(
+                    Path.GetDirectoryName(selectedXmlFile),
+                    "output.html"
+                );
 
                 var transformer = new XmlToHtmlTransformer();
                 transformer.TransformXmlToHtml(selectedXmlFile, xslFilePath, htmlOutputPath);
@@ -157,15 +153,11 @@ namespace DormitoryApp
             }
         }
 
-        protected override bool OnBackButtonPressed()
-        {
-            Device.BeginInvokeOnMainThread(async () =>
-            {
-                bool answer = await DisplayAlert("Вихід", "Чи дійсно ви хочете завершити роботу?", "Так", "Ні");
-                if (answer) Application.Current.Quit();
-            });
-
-            return true;
-        }
+       private async void OnExitClicked(object sender, EventArgs e)
+    {
+        bool answer = await DisplayAlert("Вихід", "Ви дійсно хочете вийти з програми?", "Так", "Ні");
+        if (answer)
+            System.Diagnostics.Process.GetCurrentProcess().CloseMainWindow();
+    }
     }
 }

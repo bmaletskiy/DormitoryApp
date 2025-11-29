@@ -6,7 +6,7 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="20"
-                Spacing="16">
+                             Spacing="16">
 
             <!-- HEADER -->
             <Label Text="Обробка XML-файлу «Гуртожиток»"
@@ -20,13 +20,13 @@
                     BackgroundColor="#FF1860FD"/>
 
             <Label Text="Файл:"
-                    FontAttributes="Bold"/>
+                   FontAttributes="Bold"/>
             <Label x:Name="xmlFileLabel"
-                    Text="(не вибрано)"/>
+                   Text="(не вибрано)"/>
 
             <!-- Strategy selection -->
             <Label Text="Метод аналізу (Strategy):"
-                    FontAttributes="Bold"/>
+                   FontAttributes="Bold"/>
             <Picker x:Name="strategyPicker"
                     Title="Оберіть метод">
                 <Picker.Items>
@@ -36,17 +36,30 @@
                 </Picker.Items>
             </Picker>
 
-            <!-- Attribute Picker -->
+            <!-- Faculty -->
             <Label Text="Факультет:"
-                    FontAttributes="Bold"/>
+                   FontAttributes="Bold"/>
             <Picker x:Name="facultyPicker"
                     Title="Оберіть факультет"/>
 
+            <!-- Department -->
+            <Label Text="Кафедра:"
+                   FontAttributes="Bold"/>
+            <Entry x:Name="departmentEntry"
+                   Placeholder="Наприклад: Computer Science"/>
+
+            <!-- Course -->
+            <Label Text="Курс:"
+                   FontAttributes="Bold"/>
+            <Entry x:Name="courseEntry"
+                   Placeholder="Наприклад: 2"
+                   Keyboard="Numeric"/>
+
             <!-- Keyword -->
             <Label Text="Пошук за ключовим словом (ПІБ):"
-                    FontAttributes="Bold"/>
+                   FontAttributes="Bold"/>
             <Entry x:Name="keywordEntry"
-                    Placeholder="Наприклад: Богдан"/>
+                   Placeholder="Наприклад: Богдан Іваненко"/>
 
             <!-- Buttons -->
             <HorizontalStackLayout Spacing="12">
@@ -66,7 +79,7 @@
                     Text="Перетворити XML у HTML"
                     BackgroundColor="#2196F3"
                     TextColor="White"/>
-
+                    
             <!-- Results -->
             <Label Text="Результати:"
                    FontSize="18"
@@ -77,11 +90,11 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Frame BorderColor="Gray"
-                                Margin="0,8"
-                                Padding="10">
+                               Margin="0,8"
+                               Padding="10">
                             <VerticalStackLayout>
                                 <Label Text="{Binding Name, StringFormat='ПІБ: {0}'}"
-                                        FontAttributes="Bold"/>
+                                       FontAttributes="Bold"/>
                                 <Label Text="{Binding Faculty, StringFormat='Факультет: {0}'}"/>
                                 <Label Text="{Binding Department, StringFormat='Кафедра: {0}'}"/>
                                 <Label Text="{Binding Course, StringFormat='Курс: {0}'}"/>
@@ -94,6 +107,7 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
