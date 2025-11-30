@@ -20,7 +20,6 @@ namespace DormitoryApp
             searchButton.Clicked += SearchButton_Clicked;
             clearButton.Clicked += ClearButton_Clicked;
             transformButton.Clicked += TransformButton_Clicked;
-
             strategyPicker.SelectedIndexChanged += StrategyPicker_SelectedIndexChanged;
         }
 
