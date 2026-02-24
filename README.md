@@ -43,7 +43,7 @@ The search logic is implemented via the **Strategy pattern**:
 - `SaxSearchStrategy`, `DomSearchStrategy`, `LinqXmlSearchStrategy` — concrete strategies  
 - The UI allows switching the strategy from a picker and runs the same search request with the chosen implementation. :contentReference
 
-Transformation is handled by a separate component (XSLT → HTML) and saves the result as `output.html`. :contentReference
+Transformation is handled by a separate component (XSLT → HTML) and saves the result as `output.html`. 
 
 ---
 
