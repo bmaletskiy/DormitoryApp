@@ -19,7 +19,7 @@ Cross-platform **.NET MAUI** application for **searching data in XML** using dif
   - DOM
   - LINQ to XML
 - 🧹 Clear filters and results
-- 🪄 **Transform XML → HTML**:
+-   **Transform XML → HTML**:
   - choose an **XSL** file
   - app generates `output.html` next to the selected XML
 
