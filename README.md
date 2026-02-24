@@ -41,9 +41,9 @@ The search logic is implemented via the **Strategy pattern**:
 
 - `IXmlSearchStrategy` — common interface for searching
 - `SaxSearchStrategy`, `DomSearchStrategy`, `LinqXmlSearchStrategy` — concrete strategies  
-- The UI allows switching the strategy from a picker and runs the same search request with the chosen implementation. :contentReference[oaicite:2]{index=2}
+- The UI allows switching the strategy from a picker and runs the same search request with the chosen implementation. :contentReference
 
-Transformation is handled by a separate component (XSLT → HTML) and saves the result as `output.html`. :contentReference[oaicite:3]{index=3}
+Transformation is handled by a separate component (XSLT → HTML) and saves the result as `output.html`. :contentReference
 
 ---
 
