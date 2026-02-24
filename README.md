@@ -1,59 +1,63 @@
 # DormitoryApp
 
-Cross-platform **.NET MAUI** application for **searching data in XML** using different parsing approaches (**SAX / DOM / LINQ to XML**) and **transforming XML to HTML** via **XSLT**.
+Крос-платформений застосунок на **.NET MAUI** для **пошуку даних у XML** з використанням різних підходів парсингу (**SAX / DOM / LINQ to XML**) та **перетворення XML у HTML** за допомогою **XSLT**.
 
 <img width="1920" height="965" alt="image" src="https://github.com/user-attachments/assets/c80b591e-8d43-44de-a2bc-aa53b1d4277c" />
 
-> Educational / demo project that shows how the same XML search task can be implemented with different strategies.
+> Навчальний / демонстраційний проєкт, що показує, як одну й ту саму задачу пошуку в XML можна реалізувати різними стратегіями.
 
 ---
 
-## ✨ Features
+## ✨ Можливості
 
-- 📂 **Open any XML file** via file picker  
-- 🔎 **Search in XML** by filters:
-  - keyword (name)
-  - faculty
-  - department
-  - course
-- 🧠 **Switch parsing strategy** at runtime:
+- 📂 **Відкриття будь-якого XML-файлу** через вибір файлу  
+- 🔎 **Пошук у XML** за фільтрами:
+  - ключове слово (ім’я)
+  - факультет
+  - кафедра
+  - курс
+- 🧠 **Перемикання стратегії парсингу під час виконання:**
   - SAX
   - DOM
   - LINQ to XML
-- 🧹 Clear filters and results
--   **Transform XML → HTML**:
-  - choose an **XSL** file
-  - app generates `output.html` next to the selected XML
+- 🧹 Очищення фільтрів та результатів
+- 🔄 **Перетворення XML → HTML**:
+  - вибір **XSL-файлу**
+  - застосунок створює `output.html` поруч із вибраним XML
 
 ---
 
-## 🧱 Tech stack
+## 🧱 Технології
 
 - **C# / .NET MAUI**
-- Multi-targeting: **Android / iOS / MacCatalyst / Windows** 
-- UI: MAUI XAML + code-behind
+- Мультиплатформеність: **Android / iOS / MacCatalyst / Windows**
+- Інтерфейс: MAUI XAML + code-behind
 
 ---
 
-## 🏗️ Architecture (short)
+## 🏗 Архітектура (коротко)
 
-The search logic is implemented via the **Strategy pattern**:
+Логіка пошуку реалізована за допомогою **патерну Strategy**:
 
-- `IXmlSearchStrategy` — common interface for searching
-- `SaxSearchStrategy`, `DomSearchStrategy`, `LinqXmlSearchStrategy` — concrete strategies  
-- The UI allows switching the strategy from a picker and runs the same search request with the chosen implementation. :contentReference
+- `IXmlSearchStrategy` — спільний інтерфейс для пошуку
+- `SaxSearchStrategy`, `DomSearchStrategy`, `LinqXmlSearchStrategy` — конкретні реалізації
+- Інтерфейс дозволяє змінювати стратегію через Picker і виконувати один і той самий пошук з різною реалізацією.
 
-Transformation is handled by a separate component (XSLT → HTML) and saves the result as `output.html`. 
+Перетворення реалізовано окремим компонентом (XSLT → HTML), який зберігає результат у файл `output.html`.
 
 ---
 
-## 🚀 Getting started
+## 🚀 Запуск проєкту
 
-### Prerequisites
-- **Visual Studio 2022** with **.NET MAUI** workload  
-  *(or .NET SDK + MAUI workload)*
+### Необхідно
+- **Visual Studio 2022** з встановленим **.NET MAUI workload**
+  
+або  
 
-### Run (Windows example)
+- **.NET SDK + MAUI workload**
+
+### Запуск (приклад для Windows)
+
 ```bash
 dotnet workload install maui
 dotnet build
