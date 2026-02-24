@@ -2,6 +2,8 @@
 
 Cross-platform **.NET MAUI** application for **searching data in XML** using different parsing approaches (**SAX / DOM / LINQ to XML**) and **transforming XML to HTML** via **XSLT**.
 
+<img width="1920" height="965" alt="image" src="https://github.com/user-attachments/assets/c80b591e-8d43-44de-a2bc-aa53b1d4277c" />
+
 > Educational / demo project that shows how the same XML search task can be implemented with different strategies.
 
 ---
