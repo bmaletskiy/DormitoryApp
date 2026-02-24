@@ -30,7 +30,7 @@ Cross-platform **.NET MAUI** application for **searching data in XML** using dif
 ## 🧱 Tech stack
 
 - **C# / .NET MAUI**
-- Multi-targeting: **Android / iOS / MacCatalyst / Windows** :contentReference[oaicite:1]{index=1}
+- Multi-targeting: **Android / iOS / MacCatalyst / Windows** 
 - UI: MAUI XAML + code-behind
 
 ---
